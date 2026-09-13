@@ -1,0 +1,4 @@
+Trigger GitHub Pages rebuild
+Timestamp: 2026-09-13T00:00:00Z
+
+This file was created by GitHub Copilot to trigger a Pages rebuild (empty-trigger). Remove when no longer needed.

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>မြန်မာ့ဆောက်လုပ်ရေး Hub</title>
+  
+  <!-- Cache Control Meta Tags -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#1e6bb8" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #eef5fc 0%, #e3edfa 100%);
+      --primary-blue: #1e6bb8;
+      --gold-accent: #d4af37;
+      --gold-glow: 0 4px 15px rgba(212, 175, 55, 0.25);
+    }
+
+    * { box-sizing: border-box; font-family: 'Padauk', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg-gradient); margin: 0; padding: 0; color: #333; padding-bottom: 80px; min-height: 100vh; }
+    
+    .header { background: var(--primary-blue); color: white; padding: 16px; text-align: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .header h2 { margin: 0; font-size: 1.3rem; }
+    
+    .container { max-width: 500px; margin: 0 auto; padding: 16px; }
+    
+    .section-title { font-size: 1rem; font-weight: bold; margin: 15px 0 8px 0; color: var(--primary-blue); display: flex; align-items: center; gap: 6px; }
+
+    /* Apps Dynamic Grid */
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .app-card { background: white; padding: 18px 12px; border-radius: 12px; text-align: center; text-decoration: none; color: #333; box-shadow: 0 2px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.2s; border: 1px solid #e1e8ed; }
+    .app-card:active { transform: scale(0.96); background: #eef6fc; }
+    .app-icon { font-size: 2rem; margin-bottom: 6px; }
+    .app-name { font-size: 0.95rem; font-weight: bold; }
+
+    /* VIP Sponsor & Shop Cards (ရွှေရောင်လိုင်း ကွပ်ထားသော အကွက်များ) */
+    .shop-card { background: white; border-radius: 12px; padding: 14px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); position: relative; border: 1px solid #ddd; }
+    .shop-card.is-vip { border: 2px solid var(--gold-accent); box-shadow: var(--gold-glow); background: #fffdf7; }
+    .vip-badge { position: absolute; top: -10px; right: 12px; background: linear-gradient(45deg, #b8860b, #ffd700); color: #fff; font-size: 0.68rem; font-weight: bold; padding: 2px 8px; border-radius: 10px; }
+    .call-btn { display: inline-block; margin-top: 8px; padding: 6px 14px; background: var(--primary-blue); color: white; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    
+    /* Navigation Bar */
+    .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #ddd; max-width: 500px; margin: 0 auto; z-index: 1000; }
+    .nav-item { border: none; background: none; color: #777; font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; cursor: pointer; flex: 1; padding: 6px 0; }
+    .nav-item.active { color: var(--primary-blue); font-weight: bold; }
+    .nav-item i { font-size: 1.2rem; margin-bottom: 2px; }
+
+    .price-input { margin-bottom: 10px; }
+    .price-input label { font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px; }
+    .price-input input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+    .btn-save { width: 100%; background: var(--primary-blue); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; margin-top: 10px; font-size: 1rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2>🏗️ မြန်မာ့ဆောက်လုပ်ရေး Hub</h2>
+  </div>
+
+  <div class="container">
+    <!-- Home Tab -->
+    <div id="tab-home" class="tab-content active">
+      
+      <!-- App Grid Section -->
+      <div class="section-title"><i class="fa-solid fa-calculator"></i> တွက်ချက်မှု App များ</div>
+      <div id="appsContainer" class="grid"></div>
+
+      <!-- Shops / Ads Section -->
+      <div class="section-title"><i class="fa-solid fa-store"></i> ဆောက်လုပ်ရေးဆိုင်များ ကြော်ငြာ</div>
+      <div id="shopsContainer"></div>
+      
+    </div>
+
+    <!-- History Tab -->
+    <div id="tab-history" class="tab-content">
+      <div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> တွက်ချက်မှု မှတ်တမ်းများ</div>
+      <div id="historyListContainer"></div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="tab-settings" class="tab-content">
+      <div class="section-title"><i class="fa-solid fa-gear"></i> Standard ဈေးနှုန်းများ ပြင်ရန်</div>
+      <div class="price-input">
+        <label>ဘိလပ်မြေ ၁ အိတ် (ကျပ်)</label>
+        <input type="number" id="cementPrice" value="15000">
+      </div>
+      <div class="price-input">
+        <label>အုတ် ၁ လုံး (ကျပ်)</label>
+        <input type="number" id="brickPrice" value="250">
+      </div>
+      <div class="price-input">
+        <label>သံချောင်း ၁ တန် (ကျပ်)</label>
+        <input type="number" id="steelPrice" value="2500000">
+      </div>
+      <button class="btn-save" onclick="savePrices()">သိမ်းဆည်းမည်</button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="nav-bar">
+    <button class="nav-item active" onclick="switchTab('tab-home', this)">
+      <i class="fa-solid fa-house"></i>
+      <span>ပင်မ</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-history', this)">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>မှတ်တမ်း</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-settings', this)">
+      <i class="fa-solid fa-gear"></i>
+      <span>ပြင်ဆင်ရန်</span>
+    </button>
+  </div>
+
+  <script src="./app.js?v=2.0"></script>
+</body>
+</html>

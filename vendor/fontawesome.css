@@ -1,2 +1,46 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
-/* Local wrapper for Font Awesome: keeps the same CDN import but allows switching to a local copy later if needed. */
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 900;
+  src: url('./webfonts/fa-solid-900.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./webfonts/fa-regular-400.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Font Awesome 6 Brands';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./webfonts/fa-brands-400.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* Basic helper classes used in the app */
+.fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-solid { font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+.fa-regular { font-family: 'Font Awesome 6 Free'; font-weight: 400; }
+.fa-brands { font-family: 'Font Awesome 6 Brands'; font-weight: 400; }
+
+/* Minimal mapping for fa classes used in index.html (keeps semantics) */
+.fa-calculator:before { content: "\f1ec"; }
+.fa-store:before { content: "\f54e"; }
+.fa-clock-rotate-left:before { content: "\e34a"; }
+.fa-house:before { content: "\f015"; }
+.fa-gear:before { content: "\f013"; }
+
+/* Fallback sizing */
+.fa { font-size: 1em; }

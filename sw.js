@@ -1,4 +1,4 @@
-const CACHE_NAME = 'myanmar-hub-v4.0';
+const CACHE_NAME = 'myanmar-hub-v5.0';
 const urlsToCache = [
   './',
   './index.html',

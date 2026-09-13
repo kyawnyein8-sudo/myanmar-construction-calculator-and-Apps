@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>အုတ်စီ / အချောကိုင် တွက်စက်</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; font-family: 'Padauk', sans-serif; }
+    body { background: #eef5fc; margin: 0; padding: 16px; }
+    .header { display: flex; align-items: center; justify-content: space-between; background: #1e6bb8; color: white; padding: 12px 16px; border-radius: 12px; margin-bottom: 16px; }
+    .header a { color: white; text-decoration: none; font-size: 1.2rem; }
+    .card { background: white; padding: 16px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .input-group { margin-bottom: 12px; }
+    .input-group label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 4px; }
+    .input-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    .btn-calc { width: 100%; background: #1e6bb8; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
+    .result-box { margin-top: 16px; padding: 12px; background: #eef6fc; border-radius: 8px; border-left: 4px solid #1e6bb8; display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="./index.html"><i class="fa-solid fa-arrow-left"></i></a>
+    <h3 style="margin:0;">🧱 အုတ်စီရန် တွက်စက်</h3>
+    <div style="width: 20px;"></div>
+  </div>
+
+  <div class="card">
+    <div class="input-group">
+      <label>အလျား (ပေ)</label>
+      <input type="number" id="length" placeholder="0">
+    </div>
+    <div class="input-group">
+      <label>အမြင့် (ပေ)</label>
+      <input type="number" id="height" placeholder="0">
+    </div>
+    <button class="btn-calc" onclick="calculateBrick()">တွက်ချက်မည်</button>
+
+    <div id="result" class="result-box"></div>
+  </div>
+
+  <script>
+    function calculateBrick() {
+      const l = parseFloat(document.getElementById('length').value) || 0;
+      const h = parseFloat(document.getElementById('height').value) || 0;
+      const area = l * h;
+      const bricks = Math.round(area * 14.5); // ၁ စတုရန်းပေ လျှင် အုတ် ၁၄.၅ လုံး တွက်ချက်မှု
+
+      const resBox = document.getElementById('result');
+      resBox.style.display = 'block';
+      resBox.innerHTML = `
+        <strong>တွက်ချက်မှု ရလဒ်:</strong><br>
+        ဧရိယာ: <b>${area} Sqft</b><br>
+        လိုအပ်သော အုတ်အရေအတွက်: <b style="color:#d9534f; font-size:1.1rem;">${bricks} လုံး</b>
+      `;
+
+      // Save History
+      const history = JSON.parse(localStorage.getItem('myanmar_hub_history') || '[]');
+      history.unshift({
+        title: "အုတ်စီတွက်ချက်မှု (" + l + "' x " + h + "')",
+        result: bricks + " လုံး",
+        date: new Date().toLocaleDateString('my-MM')
+      });
+      localStorage.setItem('myanmar_hub_history', JSON.stringify(history.slice(0, 20)));
+    }
+  </script>
+</body>
+</html>

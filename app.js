@@ -1,0 +1,110 @@
+// Apps Data
+const apps = [
+  { name: "ခေါင်မိုး", icon: "🏠", url: "roof.html" },
+  { name: "ကွန်ကရစ်", icon: "🏗️", url: "concrete.html" },
+  { name: "အုတ်စီရန်", icon: "🧱", url: "brick.html" },
+  { name: "သံချောင်း", icon: "🔩", url: "steel.html" },
+  { name: "ဆေးသုတ်ရန်", icon: "🎨", url: "paint.html" },
+  { name: "ကြွေပြားခင်း", icon: "🔲", url: "tile.html" },
+  { name: "သစ်တွက်ရန်", icon: "🪵", url: "wood.html" },
+  { name: "Unit Converter", icon: "📐", url: "converter.html" },
+  { name: "မှတ်စု", icon: "📝", url: "notes.html" },
+  { name: "တခြား Apps များ", icon: "🌐", url: "more.html" }
+];
+
+// Shops / Ads Data
+const shops = [
+  { name: "ရွှေနဂါး ဆောက်လုပ်ရေး", location: "လှိုင်သာယာ၊ ရန်ကုန်။", phone: "09123456789", isVip: true },
+  { name: "အောင်မင်္ဂလာ သံ/အုတ်ဆိုင်", location: "မရမ်းကုန်း၊ ရန်ကုန်။", phone: "09987654321", isVip: false }
+];
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderApps();
+  renderShops();
+  loadSavedPrices();
+  renderHistory();
+  initServiceWorker();
+});
+
+function renderApps() {
+  const container = document.getElementById('appsContainer');
+  if (!container) return;
+  
+  container.innerHTML = apps.map(app => `
+    <a class="app-card" href="./${app.url}?v=2.0">
+      <div class="app-icon">${app.icon}</div>
+      <div class="app-name">${app.name}</div>
+    </a>
+  `).join('');
+}
+
+function renderShops() {
+  const container = document.getElementById('shopsContainer');
+  if (!container) return;
+
+  container.innerHTML = shops.map(s => `
+    <div class="shop-card ${s.isVip ? 'is-vip' : ''}">
+      ${s.isVip ? '<div class="vip-badge">✨ VIP SPONSOR</div>' : ''}
+      <div style="font-weight:bold;">${s.name}</div>
+      <div style="font-size:0.8rem; color:#666;"><i class="fa-solid fa-location-dot"></i> ${s.location}</div>
+      <a href="tel:${s.phone}" class="call-btn"><i class="fa-solid fa-phone"></i> ဖုန်းခေါ်မည်</a>
+    </div>
+  `).join('');
+}
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+
+  if (tabId === 'tab-history') renderHistory();
+}
+
+function savePrices() {
+  const cement = document.getElementById('cementPrice').value;
+  const brick = document.getElementById('brickPrice').value;
+  const steel = document.getElementById('steelPrice').value;
+  
+  localStorage.setItem('myanmar_hub_prices', JSON.stringify({ cement, brick, steel }));
+  alert('ဈေးနှုန်းများ သိမ်းဆည်းပြီးပါပြီ!');
+}
+
+function loadSavedPrices() {
+  const saved = localStorage.getItem('myanmar_hub_prices');
+  if (!saved) return;
+  try {
+    const p = JSON.parse(saved);
+    if (p.cement) document.getElementById('cementPrice').value = p.cement;
+    if (p.brick) document.getElementById('brickPrice').value = p.brick;
+    if (p.steel) document.getElementById('steelPrice').value = p.steel;
+  } catch (e) {}
+}
+
+function renderHistory() {
+  const container = document.getElementById('historyListContainer');
+  if (!container) return;
+  const history = JSON.parse(localStorage.getItem('myanmar_hub_history') || '[]');
+  
+  if (history.length === 0) {
+    container.innerHTML = '<p style="color:#888; text-align:center;">မှတ်တမ်းများ မရှိသေးပါ။</p>';
+    return;
+  }
+  
+  container.innerHTML = history.map(item => `
+    <div style="background:white; padding:12px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+      <div>
+        <strong style="color:#1e6bb8; font-size:0.9rem;">${item.title}</strong>
+        <div style="font-size:0.75rem; color:#888;">${item.date}</div>
+      </div>
+      <span style="font-weight:bold; color:#d9534f;">${item.result}</span>
+    </div>
+  `).join('');
+}
+
+function initServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Fail:', err));
+  }
+}

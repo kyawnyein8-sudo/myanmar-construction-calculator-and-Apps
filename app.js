@@ -91,6 +91,16 @@ function renderHistory() {
     container.innerHTML = '<p style="color:#888; text-align:center;">မှတ်တမ်းများ မရှိသေးပါ။</p>';
     return;
   }
+  function clearHistory() {
+  if (confirm("မှတ်တမ်းများအားလုံးကို တကယ် ဖျက်မှာ သေချာပါသလား။")) {
+    localStorage.removeItem('myanmar_hub_history');
+    if (typeof loadHistory === 'function') {
+      loadHistory();
+    } else {
+      location.reload();
+    }
+  }
+}
   
   container.innerHTML = history.map(item => `
     <div style="background:white; padding:12px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; box-shadow:0 1px 3px rgba(0,0,0,0.05);">

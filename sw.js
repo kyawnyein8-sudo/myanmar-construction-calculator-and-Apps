@@ -1,9 +1,20 @@
-const CACHE_NAME = 'myanmar-hub-v6.0';
+const CACHE_NAME = 'myanmar-hub-v6.1';
 const urlsToCache = [
   './',
   './index.html',
   './app.js',
-  './manifest.json'
+  './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './roof.html',
+  './concrete.html',
+  './brick.html',
+  './paint.html',
+  './tile.html',
+  './wood.html',
+  './converter.html',
+  './notes.html',
+  './more.html'
 ];
 
 // Install: cache files but skip ones that fail to avoid install failure

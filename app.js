@@ -26,16 +26,41 @@ window.addEventListener('DOMContentLoaded', () => {
   initServiceWorker();
 });
 
-function renderApps() {
+// Render apps: try to fetch each page and only show link when available.
+async function renderApps() {
   const container = document.getElementById('appsContainer');
   if (!container) return;
-  
-  container.innerHTML = apps.map(app => `
-    <a class="app-card" href="./${app.url}?v=2.0">
+
+  const nodes = await Promise.all(apps.map(async app => {
+    // If offline, show link anyway (service worker/offline caching should help) but mark as maybe unavailable
+    if (!navigator.onLine) {
+      return `<a class="app-card" href="./${app.url}?v=2.0">
+        <div class="app-icon">${app.icon}</div>
+        <div class="app-name">${app.name}</div>
+      </a>`;
+    }
+
+    try {
+      const res = await fetch(app.url, { method: 'GET', cache: 'no-store' });
+      if (res && (res.status === 200 || res.status === 0)) {
+        return `<a class="app-card" href="./${app.url}?v=2.0">
+          <div class="app-icon">${app.icon}</div>
+          <div class="app-name">${app.name}</div>
+        </a>`;
+      }
+    } catch (e) {
+      // fetch failed -> fallthrough to placeholder
+    }
+
+    // Fallback: render disabled card so user knows it's coming soon
+    return `<div class="app-card" aria-disabled="true" title="မရရှိသေးပါ">
       <div class="app-icon">${app.icon}</div>
       <div class="app-name">${app.name}</div>
-    </a>
-  `).join('');
+      <div style="font-size:0.72rem;color:#999;margin-top:6px;">Coming soon</div>
+    </div>`;
+  }));
+
+  container.innerHTML = nodes.join('');
 }
 
 function renderShops() {

@@ -1,16 +1,30 @@
 <!doctype html>
 <html lang="my">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ခေါင်မိုး - မြန်မာ့ဆောက်လုပ်ရေး Hub</title>
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#1e6bb8">
-  <style>body{font-family:Arial,sans-serif;padding:16px;background:#eef5fc}a{color:#1e6bb8}</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ခေါင်မိုး Calculator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+  <style>
+    body{font-family:Padauk,system-ui,Arial;margin:0;background:#f5fbff;color:#123}
+    .frame-wrapper{max-width:800px;margin:16px auto;padding:10px}
+    .iframe-card{background:#fff;border-radius:10px;padding:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    .iframe-card h2{margin:0 0 8px 0}
+    .calculator-iframe{width:100%;height:700px;border:0;border-radius:8px}
+    @media(max-width:640px){.calculator-iframe{height:900px}}
+  </style>
 </head>
 <body>
-  <h1>ခေါင်မိုး (Roof) — Placeholder</h1>
-  <p>ဤနေရာတွင် ခေါင်မိုးတွက်ချက်မှု app ရောက်လာမည်။ အခုအချိန်တွင် placeholder ဖြစ်ပါသည်။</p>
-  <p><a href="./index.html">◀︎ ပင်မစာမျက်နှာသို့</a></p>
+  <div class="frame-wrapper">
+    <div class="iframe-card">
+      <h2><i class="fa-solid fa-house"></i> ခေါင်မိုး Calculator (Embedded)</h2>
+      <iframe class="calculator-iframe"
+              src="https://kyawnyein8-sudo.github.io/Myanmar-construction-flash/"
+              title="Roof calculator"
+              loading="lazy"
+              sandbox="allow-scripts allow-same-origin allow-forms">
+      </iframe>
+    </div>
+  </div>
 </body>
 </html>

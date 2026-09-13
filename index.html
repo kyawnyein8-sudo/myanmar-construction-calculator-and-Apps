@@ -59,10 +59,54 @@
     .price-input label { font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px; }
     .price-input input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
     .btn-save { width: 100%; background: var(--primary-blue); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; margin-top: 10px; font-size: 1rem; cursor: pointer; }
+
+    .price-ticker-bar {
+  background: linear-gradient(90deg, #0f172a, #1e293b);
+  color: #f8fafc;
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-bottom: 1.5px solid #334155;
+}
+
+.ticker-track {
+  display: inline-block;
+  white-space: nowrap;
+  animation: tickerScroll 25s linear infinite;
+  padding-left: 100%;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+.ticker-item {
+  display: inline-block;
+  margin-right: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ticker-item span {
+  color: #fbbf24;
+  font-weight: 700;
+  margin-left: 6px;
+}
   </style>
 </head>
 <body>
-
+ <div class="price-ticker-bar">
+  <div class="ticker-track" id="priceTicker">
+    <span class="ticker-item">💡 ဈေးနှုန်းအချက်အလက်များ တင်နေသည်...</span>
+  </div>
+</div>
   <div class="header">
     <h2>🏗️ မြန်မာ့ဆောက်လုပ်ရေး Hub</h2>
   </div>

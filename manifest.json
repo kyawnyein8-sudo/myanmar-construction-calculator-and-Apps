@@ -1,0 +1,15 @@
+{
+  "name": "မြန်မာ့ဆောက်လုပ်ရေး Hub",
+  "short_name": "ဆောက်လုပ်ရေး Hub",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#eef5fc",
+  "theme_color": "#1e6bb8",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/4333/4333609.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -2,69 +2,511 @@
 <html lang="my">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>အုတ်စီ / အချောကိုင် တွက်စက်</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet" />
+  
   <style>
-    * { box-sizing: border-box; font-family: 'Padauk', sans-serif; }
-    body { background: #eef5fc; margin: 0; padding: 16px; }
-    .header { display: flex; align-items: center; justify-content: space-between; background: #1e6bb8; color: white; padding: 12px 16px; border-radius: 12px; margin-bottom: 16px; }
-    .header a { color: white; text-decoration: none; font-size: 1.2rem; }
-    .card { background: white; padding: 16px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-    .input-group { margin-bottom: 12px; }
-    .input-group label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 4px; }
-    .input-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
-    .btn-calc { width: 100%; background: #1e6bb8; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
-    .result-box { margin-top: 16px; padding: 12px; background: #eef6fc; border-radius: 8px; border-left: 4px solid #1e6bb8; display: none; }
+    .calc-wrapper {
+      max-width: 520px;
+      margin: 10px auto;
+      padding: 0 10px;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Padauk, sans-serif;
+    }
+    
+    .calc-card {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      border: 1px solid #f1f5f9;
+      overflow: hidden;
+    }
+
+    .calc-header-modern {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      padding: 16px 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      transition: 0.2s;
+    }
+
+    .back-btn:active {
+      transform: scale(0.92);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .icon-circle {
+      background: rgba(255, 255, 255, 0.2);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .calc-header-modern h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .calc-body {
+      padding: 20px;
+    }
+
+    .section-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #64748b;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .calc-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .calc-input-group {
+      margin-bottom: 14px;
+    }
+
+    .calc-input-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .input-with-suffix {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .calc-input-group input, 
+    .calc-input-group select {
+      width: 100%;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: #0f172a;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .input-with-suffix input {
+      padding-right: 40px;
+    }
+
+    .input-with-suffix .suffix {
+      position: absolute;
+      right: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #94a3b8;
+      pointer-events: none;
+    }
+
+    .calc-input-group input:focus, 
+    .calc-input-group select:focus {
+      background: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .divider {
+      height: 1px;
+      background: #e2e8f0;
+      margin: 16px 0 20px 0;
+    }
+
+    .btn-calc-modern {
+      width: 100%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .btn-calc-modern:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-calc-modern:active {
+      transform: translateY(1px);
+    }
+
+    .result-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .result-badge {
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .result-badge.cost {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .result-subtitle {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .result-list {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 6px 12px;
+      border: 1px solid #f1f5f9;
+    }
+
+    .res-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e2e8f0;
+      font-size: 0.9rem;
+    }
+
+    .res-row:last-child {
+      border-bottom: none;
+    }
+
+    .res-label {
+      color: #64748b;
+    }
+
+    .res-value {
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .res-value.highlight {
+      color: #2563eb;
+    }
+
+    .grand-total-box {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    }
+
+    .total-title {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .total-amount {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+
+    @media (max-width: 400px) {
+      .calc-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <a href="./index.html"><i class="fa-solid fa-arrow-left"></i></a>
-    <h3 style="margin:0;">🧱 အုတ်စီရန် တွက်စက်</h3>
-    <div style="width: 20px;"></div>
-  </div>
-
-  <div class="card">
-    <div class="input-group">
-      <label>အလျား (ပေ)</label>
-      <input type="number" id="length" placeholder="0">
+<div class="calc-wrapper">
+  <div class="calc-card">
+    <!-- Card Header -->
+    <div class="calc-header-modern">
+      <a href="./index.html" class="back-btn" title="ပင်မစာမျက်နှာသို့">❮</a>
+      <div class="icon-circle">🧱</div>
+      <h3>အုတ်စီ / အချောကိုင် တွက်ကြမယ်</h3>
     </div>
-    <div class="input-group">
-      <label>အမြင့် (ပေ)</label>
-      <input type="number" id="height" placeholder="0">
+
+    <!-- Inputs Section -->
+    <div class="calc-body">
+      <!-- Dimensions -->
+      <div class="section-label">📐 နံရံ အတိုင်းအတာများ</div>
+      <div class="calc-grid-2">
+        <div class="calc-input-group">
+          <label for="length">အလျား (ပေ)</label>
+          <div class="input-with-suffix">
+            <input type="number" id="length" value="10" step="any" placeholder="0">
+            <span class="suffix">ft</span>
+          </div>
+        </div>
+        <div class="calc-input-group">
+          <label for="height">အမြင့် (ပေ)</label>
+          <div class="input-with-suffix">
+            <input type="number" id="height" value="10" step="any" placeholder="0">
+            <span class="suffix">ft</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Options -->
+      <div class="calc-input-group">
+        <label for="wallThickness">နံရံအထူ ရွေးချယ်ရန်</label>
+        <select id="wallThickness">
+          <option value="4.5">4.5 လက်မ (အုတ်တစ်ဝက်စီ)</option>
+          <option value="9">9 လက်မ (အုတ်တစ်ကြောင်းစီ)</option>
+        </select>
+      </div>
+
+      <div class="calc-input-group">
+        <label for="plasterType">အချောကိုင်မည့် မျက်နှာပြင်</label>
+        <select id="plasterType">
+          <option value="both">နှစ်ဖက်စလုံး အချောကိုင်မည်</option>
+          <option value="one">တစ်ဖက်တည်း အချောကိုင်မည်</option>
+          <option value="none">အချောမကိုင်ပါ (အုတ်စီသန့်သန့်)</option>
+        </select>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Unit Prices -->
+      <div class="section-label">🏷️ ပစ္စည်း နှင့် လုပ်အားခ ဈေးနှုန်းများ</div>
+      <div class="calc-grid-2">
+        <div class="calc-input-group">
+          <label for="brickPrice">အုတ် ၁ လုံး ဈေး</label>
+          <div class="input-with-suffix">
+            <input type="number" id="brickPrice" value="550">
+            <span class="suffix">Ks</span>
+          </div>
+        </div>
+        <div class="calc-input-group">
+          <label for="cementPrice">ဘိလပ်မြေ ၁ အိတ်</label>
+          <div class="input-with-suffix">
+            <input type="number" id="cementPrice" value="18000">
+            <span class="suffix">Ks</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-grid-2">
+        <div class="calc-input-group">
+          <label for="sandPrice">သဲ ၁ ကျင်း ဈေး</label>
+          <div class="input-with-suffix">
+            <input type="number" id="sandPrice" value="75000">
+            <span class="suffix">Ks</span>
+          </div>
+        </div>
+        <div class="calc-input-group">
+          <label for="laborRate">၁ စတုရန်းပေ လုပ်အားခ</label>
+          <div class="input-with-suffix">
+            <input type="number" id="laborRate" value="2800">
+            <span class="suffix">Ks</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button type="button" class="btn-calc-modern" onclick="calculateAll()">
+        <span>တွက်ချက်မည်</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+
+      <!-- Results Section -->
+      <div class="result-card" id="resultContainer">
+        <div class="result-header">
+          <span class="result-badge">📊 ရလဒ်များ</span>
+          <span class="result-subtitle">တွက်ချက်ရရှိသော ပစ္စည်းပမာဏ</span>
+        </div>
+        
+        <div class="result-list">
+          <div class="res-row">
+            <span class="res-label">ဧရိယာ စုစုပေါင်း</span>
+            <span class="res-value" id="resArea">0 Sq.ft</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">အုတ် လိုအပ်ချက်</span>
+            <span class="res-value highlight" id="resBricks">0 လုံး</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">ဘိလပ်မြေ လိုအပ်ချက်</span>
+            <span class="res-value highlight" id="resCement">0 အိတ်</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">သဲ လိုအပ်ချက်</span>
+            <span class="res-value highlight" id="resSand">0 ကျင်း</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">ခန့်မှန်း ကြာမြင့်ချိန်</span>
+            <span class="res-value" id="resTime">0 ရက်</span>
+          </div>
+        </div>
+
+        <div class="result-header" style="margin-top: 18px;">
+          <span class="result-badge cost">💰 ကုန်ကျစရိတ်</span>
+          <span class="result-subtitle">ကုန်ကျစရိတ် ခန့်မှန်းခြေ</span>
+        </div>
+
+        <div class="result-list">
+          <div class="res-row">
+            <span class="res-label">အုတ် ကုန်ကျစရိတ်</span>
+            <span class="res-value" id="costBricks">0 Ks</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">ဘိလပ်မြေ ကုန်ကျစရိတ်</span>
+            <span class="res-value" id="costCement">0 Ks</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">သဲ ကုန်ကျစရိတ်</span>
+            <span class="res-value" id="costSand">0 Ks</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">လုပ်အားခ စုစုပေါင်း</span>
+            <span class="res-value" id="costLabor">0 Ks</span>
+          </div>
+        </div>
+
+        <div class="grand-total-box">
+          <span class="total-title">စုစုပေါင်း ကုန်ကျစရိတ် ခန့်မှန်းခြေ</span>
+          <span class="total-amount" id="grandTotal">0 Ks</span>
+        </div>
+      </div>
     </div>
-    <button class="btn-calc" onclick="calculateBrick()">တွက်ချက်မည်</button>
-
-    <div id="result" class="result-box"></div>
   </div>
+</div>
 
-  <script>
-    function calculateBrick() {
-      const l = parseFloat(document.getElementById('length').value) || 0;
-      const h = parseFloat(document.getElementById('height').value) || 0;
-      const area = l * h;
-      const bricks = Math.round(area * 14.5); // ၁ စတုရန်းပေ လျှင် အုတ် ၁၄.၅ လုံး တွက်ချက်မှု
+<script>
+  function calculateAll() {
+    const length = parseFloat(document.getElementById('length').value) || 0;
+    const height = parseFloat(document.getElementById('height').value) || 0;
+    const thickness = parseFloat(document.getElementById('wallThickness').value);
+    const plasterType = document.getElementById('plasterType').value;
 
-      const resBox = document.getElementById('result');
-      resBox.style.display = 'block';
-      resBox.innerHTML = `
-        <strong>တွက်ချက်မှု ရလဒ်:</strong><br>
-        ဧရိယာ: <b>${area} Sqft</b><br>
-        လိုအပ်သော အုတ်အရေအတွက်: <b style="color:#d9534f; font-size:1.1rem;">${bricks} လုံး</b>
-      `;
+    const brickPrice = parseFloat(document.getElementById('brickPrice').value) || 0;
+    const cementPrice = parseFloat(document.getElementById('cementPrice').value) || 0;
+    const sandPrice = parseFloat(document.getElementById('sandPrice').value) || 0;
+    const laborRate = parseFloat(document.getElementById('laborRate').value) || 0;
 
-      // Save History
+    const area = length * height;
+
+    if (area <= 0) {
+      alert('ကျေးဇူးပြု၍ မှန်ကန်သော အလျားနှင့် အမြင့် တန်ဖိုးများကို ထည့်သွင်းပါ။');
+      return;
+    }
+
+    const bricksPerSqFt = (thickness === 4.5) ? 4.5 : 9;
+    const totalBricks = Math.ceil(area * bricksPerSqFt);
+
+    let cementBags = (thickness === 4.5) ? (area * 0.02) : (area * 0.04);
+    let sandCuFt = (thickness === 4.5) ? (area * 0.08) : (area * 0.16);
+
+    let plasterMultiplier = 0;
+    if (plasterType === 'both') plasterMultiplier = 2;
+    else if (plasterType === 'one') plasterMultiplier = 1;
+
+    if (plasterMultiplier > 0) {
+      cementBags += (area * 0.012 * plasterMultiplier);
+      sandCuFt += (area * 0.05 * plasterMultiplier);
+    }
+
+    const totalCement = Math.ceil(cementBags * 10) / 10;
+    const totalSandSud = Math.ceil((sandCuFt / 100) * 100) / 100;
+
+    const totalHours = Math.round((area / 10) * 10) / 10;
+    const totalDays = Math.ceil((area / 80) * 10) / 10;
+
+    const costBricksVal = totalBricks * brickPrice;
+    const costCementVal = Math.ceil(totalCement * cementPrice);
+    const costSandVal = Math.ceil(totalSandSud * sandPrice);
+    const costLaborVal = area * laborRate;
+    const grandTotalVal = costBricksVal + costCementVal + costSandVal + costLaborVal;
+
+    document.getElementById('resArea').textContent = area.toLocaleString() + ' Sq.ft';
+    document.getElementById('resBricks').textContent = totalBricks.toLocaleString() + ' Pcs';
+    document.getElementById('resCement').textContent = totalCement + ' Bags';
+    document.getElementById('resSand').textContent = totalSandSud + ' Suds';
+    document.getElementById('resTime').textContent = totalDays + ' Days (' + totalHours + ' Hours)';
+
+    document.getElementById('costBricks').textContent = costBricksVal.toLocaleString() + ' Ks';
+    document.getElementById('costCement').textContent = costCementVal.toLocaleString() + ' Ks';
+    document.getElementById('costSand').textContent = costSandVal.toLocaleString() + ' Ks';
+    document.getElementById('costLabor').textContent = costLaborVal.toLocaleString() + ' Ks';
+    document.getElementById('grandTotal').textContent = grandTotalVal.toLocaleString() + ' Ks';
+
+    // LocalStorage ထဲသို့ မှတ်တမ်းသိမ်းဆည်းခြင်း (History Sync)
+    try {
       const history = JSON.parse(localStorage.getItem('myanmar_hub_history') || '[]');
       history.unshift({
-        title: "အုတ်စီတွက်ချက်မှု (" + l + "' x " + h + "')",
-        result: bricks + " လုံး",
+        title: `အုတ်စီ/အချောကိုင် (${length}' x ${height}')`,
+        result: grandTotalVal.toLocaleString() + ' Ks',
         date: new Date().toLocaleDateString('my-MM')
       });
       localStorage.setItem('myanmar_hub_history', JSON.stringify(history.slice(0, 20)));
+    } catch (e) {
+      console.log('History save error:', e);
     }
-  </script>
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    calculateAll();
+  });
+</script>
+
 </body>
 </html>

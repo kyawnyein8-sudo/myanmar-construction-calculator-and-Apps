@@ -1,4 +1,4 @@
-const CACHE_NAME = 'myanmar-hub-v6.1';
+const CACHE_NAME = 'myanmar-hub-v6.2';
 const urlsToCache = [
   './',
   './index.html',
@@ -14,7 +14,11 @@ const urlsToCache = [
   './wood.html',
   './converter.html',
   './notes.html',
-  './more.html'
+  './more.html',
+  './fonts/padauk.woff2',
+  './webfonts/fa-solid-900.woff2',
+  './webfonts/fa-regular-400.woff2',
+  './webfonts/fa-brands-400.woff2'
 ];
 
 // Install: cache files but skip ones that fail to avoid install failure

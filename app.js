@@ -15,7 +15,7 @@ const apps = [
 // Shops / Ads Data
 const shops = [
   { name: "ရွှေနဂါး ဆောက်လုပ်ရေး", location: "လှိုင်သာယာ၊ ရန်ကုန်။", phone: "09123456789", isVip: true },
-  { name: "အောင်မင်္ဂလာ သံ/အုတ်ဆိုင်", location: "မရမ်းကုန်း၊ ရန်ကုန်။", phone: "09987654321", isVip: false }
+  { name: "အောင်မင်္ဂလာ သံ/အုတ်ဆိုင်", location: "မရမ်းကုန်း၊ ရန်ကုန်။", phone: "09123456789", isVip: false }
 ];
 
 window.addEventListener('DOMContentLoaded', () => {

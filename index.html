@@ -7,6 +7,8 @@
   
   <link rel="manifest" href="./manifest.json" />
   <meta name="theme-color" content="#1e6bb8" />
+  <!-- Quick fix: load Font Awesome from CDN so icons render correctly while local webfonts are placeholders -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="./vendor/fontawesome.css" />
   
   <style>
@@ -29,7 +31,7 @@
     * { box-sizing: border-box; font-family: 'Padauk', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background: var(--bg-gradient); margin: 0; padding: 0; color: #333; padding-bottom: 80px; min-height: 100vh; }
     
-    .header { background: var(--primary-blue); color: white; padding: 16px; text-align: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
+    .header { background: var(--primary-blue); color: white; padding: 16px; text-align: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
     .header h2 { margin: 0; font-size: 1.3rem; }
     
     .container { max-width: 500px; margin: 0 auto; padding: 16px; }
@@ -43,10 +45,10 @@
     .app-icon { font-size: 2rem; margin-bottom: 6px; }
     .app-name { font-size: 0.95rem; font-weight: bold; }
 
-    /* VIP Sponsor & Shop Cards (ရွှေရောင်လ���ုင်း ကွပ်ထားသော အကွက်များ) */
+    /* VIP Sponsor & Shop Cards (ရွှေရောင်လှုပ်ရှားသော အကွက်များ) */
     .shop-card { background: white; border-radius: 12px; padding: 14px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); position: relative; border: 1px solid #ddd; }
     .shop-card.is-vip { border: 2px solid var(--gold-accent); box-shadow: var(--gold-glow); background: #fffdf7; }
-    .vip-badge { position: absolute; top: -10px; right: 12px; background: linear-gradient(45deg, #b8860b, #ffd700); color: #fff; font-size: 0.68rem; font-weight: bold; padding: 2px 8px; border-radius: 8px; }
+    .vip-badge { position: absolute; top: -10px; right: 12px; background: linear-gradient(45deg, #b8860b, #ffd700); color: #fff; font-size: 0.68rem; font-weight: bold; padding: 2px 8px; border-radius: 6px; }
     .call-btn { display: inline-block; margin-top: 8px; padding: 6px 14px; background: var(--primary-blue); color: white; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 700; }
 
     .tab-content { display: none; }
